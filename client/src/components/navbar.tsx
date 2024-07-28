@@ -46,10 +46,15 @@ export default function Navbar() {
                                 </Link>
                             </li>
 
-                            
+
                             <li>
                                 <Link href="/donation" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
                                     Donation
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/game" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
+                                    Game
                                 </Link>
                             </li>
                             <li>
