@@ -244,7 +244,7 @@ export default function CreateEvent() {
                       <DialogTitle>Map Location</DialogTitle>
                       <DialogDescription>Select the location of the event on the map.</DialogDescription>
                     </DialogHeader>
-                    <MyMap initialPosition={[0, 0]} zoom={10} onLocationSelect={handleLocationSelect} />
+                    <MyMap initialPosition={[-20.3484, 57.5522]} zoom={10} onLocationSelect={handleLocationSelect} />
                   </DialogContent>
                 </Dialog>
               </div>

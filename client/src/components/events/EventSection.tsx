@@ -34,7 +34,7 @@ const GetAllEvents: React.FC = () => {
     }, [toast]);
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto my-3">
             {loading ? (
                 <Loading />
             ) : (
@@ -45,7 +45,7 @@ const GetAllEvents: React.FC = () => {
                         )}
                     />
                     <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 m-2">
                             {events.length > 0 ? (
                                 events.map(event => (
                                     <EventComponent key={event._id} {...event} id={event._id} />

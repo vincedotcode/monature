@@ -172,3 +172,31 @@ export const addUserDonation = async (donationId: string, userId: string, amount
       }
     }
   }
+
+
+  export const getDonationByUser = async (userId: string): Promise<Donation[]> => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/donations/user/${userId}`;
+    try {
+      const response: AxiosResponse<Donation[]> = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string; error: string }>;
+      if (axiosError.response) {
+        throw new Error(
+          JSON.stringify({
+            statusCode: axiosError.response.status,
+            message: axiosError.response.data.message || 'An unexpected error occurred',
+            error: axiosError.response.data.error || 'Bad Request',
+          })
+        );
+      } else {
+        throw new Error(
+          JSON.stringify({
+            statusCode: 500,
+            message: 'Network Error or Internal Server Error',
+            error: 'Server Error',
+          })
+        );
+      }
+    }
+  }

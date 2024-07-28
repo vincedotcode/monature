@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import GoalCard from "@/components/goals/GoalsCard";
 import { getAllGoals, Goal } from "@/services/goal"; // Adjust the path as needed
-
+import Loader from "@/components/loader"; // Assume you have a loader component
 export default function Component() {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export default function Component() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <> <Loader /> </>;
   }
 
   if (error) {

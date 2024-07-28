@@ -122,7 +122,7 @@ router.put('/:id/:userId', eventController.updateEvent);
  *       400:
  *         description: Error message
  */
-router.delete('/:id/:userId', eventController.deleteEvent);
+router.delete('/:id', eventController.deleteEvent);
 
 /**
  * @swagger

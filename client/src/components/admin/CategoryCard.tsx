@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Trash } from "lucide-react"
 import { deleteCategory } from "@/services/category"
-
+import { useToast } from "@/components/ui/use-toast"
 type Category = {
   _id: string
   name: string
@@ -20,13 +20,25 @@ type Props = {
 }
 
 const CategoryCard: React.FC<Props> = ({ category, onDelete }) => {
+  const { toast } = useToast()
   const handleDelete = async () => {
+
     try {
       await deleteCategory(category._id)
       onDelete(category._id)
-    } catch (error) {
-      console.error("Failed to delete category:", error)
-    }
+      toast({
+          variant: 'default',
+          title: 'Category deleted successfully',
+          description: 'The category has been deleted.',
+      });
+  } catch (error) {
+      toast({
+          variant: 'destructive',
+          title: 'Error deleting category',
+          description: 'There was a problem deleting the category.',
+      });
+  }
+    
   }
 
   return (

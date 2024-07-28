@@ -10,6 +10,7 @@ import forumPostRoutes from './routes/Post.js';
 import goalsRoutes from './routes/Goals.js';
 import imageRoute from './routes/Image.js';
 import eventRoute from './routes/Event.js';
+import contactRoutes from './routes/Contact.js';
 import donationRoutes from './routes/Donation.js';
 import config from './config/index.js';
 
@@ -45,6 +46,7 @@ app.use('/api/forum-posts', forumPostRoutes);
 app.use('/api/image', imageRoute);
 app.use('/api/goals', goalsRoutes); 
 app.use('/api/donations', donationRoutes);
+app.use('/api', contactRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -56,6 +56,16 @@ const createDonationPayment = async (req, res) => {
     }
 };
 
+export const getDonationsByUserIdController = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const donations = await donationService.getDonationsByUserId(userId);
+        res.status(200).json(donations);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching donations', error: error.message });
+    }
+};
+
 export default {
     addDonation,
     getAllDonations,
@@ -63,4 +73,6 @@ export default {
     deleteDonation,
     addUserDonation,
     createDonationPayment,
+    getDonationsByUserIdController,
+    
 };

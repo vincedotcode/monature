@@ -12,12 +12,36 @@ export default function HeroSectionCentredWithImage() {
       <div className="relative overflow-hidden py-24 lg:py-32">
         <div className="container mx-auto text-center">
           <div className="max-w-2xl mx-auto">
-            <FlipText
-              className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-black dark:text-white md:text-7xl md:leading-[5rem]"
-              word="Nano-Frontiers: Reshaping Tech"
-            />
+            <div className="hidden sm:block justify-center">
+              <FlipText
+                className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-black dark:text-white md:text-7xl md:leading-[5rem]"
+                word="Mo Nature: Sustainable Development Goals"
+              />
+            </div>
+            <div className="block sm:hidden">
+              <FlipText
+                className="scroll-m-20 text-2xl font-extrabold tracking-tight text-black dark:text-white"
+                word="Mo"
+              />
+              <FlipText
+                className="scroll-m-20 text-2xl font-extrabold tracking-tight text-black dark:text-white"
+                word="Nature:"
+              />
+              <FlipText
+                className="scroll-m-20 text-2xl font-extrabold tracking-tight text-black dark:text-white"
+                word="Sustainable"
+              />
+              <FlipText
+                className="scroll-m-20 text-2xl font-extrabold tracking-tight text-black dark:text-white"
+                word="Development"
+              />
+              <FlipText
+                className="scroll-m-20 text-2xl font-extrabold tracking-tight text-black dark:text-white"
+                word="Goals"
+              />
+            </div>
             <p className="mt-3 text-xl text-muted-foreground">
-              Nano-computing breaks barriers, unlocking new tech horizons.
+              Join us in our mission to promote sustainable development and protect our environment for future generations.
             </p>
           </div>
           <div className="mt-10 relative max-w-5xl mx-auto">

@@ -48,7 +48,7 @@ const CommunitySection: React.FC = () => {
         <CardTitle>Community Groups</CardTitle>
         <CardDescription>Explore and join various community groups.</CardDescription>
       </CardHeader>
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {communityGroups.map(group => (
           <CommunityCard key={group._id} group={group} />
         ))}

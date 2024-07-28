@@ -8,9 +8,12 @@ const Loader: React.FC = () => {
       <div className="bg-white border border-lime-500 rounded-lg p-4 flex items-center justify-center">
         <motion.div
           animate={{
-            scale: [1, 1.5, 1.5, 1, 1],
-            rotate: [0, 0, 270, 270, 0],
-            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "linear",
           }}
           className="flex items-center justify-center"
         >

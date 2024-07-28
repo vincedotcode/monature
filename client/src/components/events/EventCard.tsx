@@ -31,7 +31,7 @@ const EventComponent: React.FC<EventProps> = ({
     const isUpcoming = currentDate < eventDate;
 
     return (
-        <div className="w-full max-w-sm p-6 grid gap-6 rounded-lg hover:bg-muted transition-colors p-2">
+        <div className="w-full max-w-sm p-6 grid gap-6 rounded-lg hover:bg-muted transition-colors">
             <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold">{name}</h3>
                 <div className="flex items-center gap-2">

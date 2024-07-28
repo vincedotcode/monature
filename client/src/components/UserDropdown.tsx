@@ -6,7 +6,8 @@ import { useAuth } from '@/hooks/useUserData';
 
 const UserDropdown = () => {
     const router = useRouter();
-    const { clearUserData } = useAuth();
+    const { getUserData, clearUserData } = useAuth();
+    const user = getUserData();
 
     const handleNavigate = (path: string) => {
         router.push(path);
@@ -16,8 +17,6 @@ const UserDropdown = () => {
         clearUserData();
         router.push('/');
     };
-
-
 
     return (
         <DropdownMenu>
@@ -30,9 +29,17 @@ const UserDropdown = () => {
             <DropdownMenuContent className="w-56 bg-background shadow-lg rounded-md p-1">
                 <DropdownMenuLabel className="px-2 py-1">My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="px-2 py-1 hover:bg-gray-100 hover:text-slate-800" onClick={() => handleNavigate('/account/bookings')}>
-                    My Events
+                <DropdownMenuItem className="px-2 py-1 hover:bg-gray-100 hover:text-slate-800" onClick={() => handleNavigate('/account/donations')}>
+                    My Donations
                 </DropdownMenuItem>
+                {user?.role === 'admin' && (
+                    <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="px-2 py-1 hover:bg-gray-100 hover:text-slate-800" onClick={() => handleNavigate('/admin')}>
+                            Admin
+                        </DropdownMenuItem>
+                    </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="px-2 py-1 hover:bg-gray-100 hover:text-slate-800" onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />

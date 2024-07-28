@@ -44,7 +44,7 @@ export const useAuth = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('userData');
       localStorage.removeItem('token');
-      window.location.reload();
+    
     }
   }, []);
 

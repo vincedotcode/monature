@@ -34,17 +34,13 @@ const updateEvent = async (eventId, updateData, organizerId) => {
 };
 
 // Delete an event
-const deleteEvent = async (eventId, organizerId) => {
+const deleteEvent = async (eventId) => {
     const event = await Event.findById(eventId);
     if (!event) {
         throw new Error('Event not found');
     }
 
-    if (event.organizer.toString() !== organizerId) {
-        throw new Error('Only the organizer can delete this event');
-    }
-
-    await event.remove();
+    await event.deleteOne();
     return { message: 'Event deleted successfully' };
 };
 

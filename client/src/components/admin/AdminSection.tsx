@@ -36,13 +36,13 @@ import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage, } from 
 import { useAuth } from '@/hooks/useUserData';
 import AdminDonationCard from "@/components/admin/AdminDonationCard"; // Adjust the path as needed
 import { getAllDonations, Donation, addDonation } from "@/services/donation";
-import {AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogAction, AlertDialogDescription, AlertDialog} from "@/components/ui/alert-dialog";
+import { AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogAction, AlertDialogDescription, AlertDialog } from "@/components/ui/alert-dialog";
 const donationFormSchema = z.object({
     title: z.string().nonempty({ message: "Title is required" }),
     subHead: z.string().nonempty({ message: "Sub-head is required" }),
     description: z.string().nonempty({ message: "Description is required" }),
     amount: z.number().positive({ message: "Amount must be positive" }),
-  });
+});
 // Define the form validation schema using Zod
 const categoryFormSchema = z.object({
     name: z.string().nonempty({ message: "Category name is required" }),
@@ -102,7 +102,28 @@ const AdminCard: React.FC = () => {
     const handleDeleteEvent = async (id: string) => {
         try {
             await deleteEvent(id);
-            setEvents(events.filter(event => event._id !== id));
+            const fetchData = async () => {
+                setLoading(true);
+                try {
+                    const [events, categories, communityGroups] = await Promise.all([getAllEvents(), getAllCategories(), getAllCommunityGroups()]);
+                    setEvents(events);
+                    setCategories(categories);
+                    setCommunityGroups(communityGroups);
+                } catch (error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error fetching data',
+                        description: 'There was a problem fetching the data.',
+                    });
+                    setEvents([]);
+                    setCategories([]);
+                    setCommunityGroups([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchData();
             toast({
                 variant: 'default',
                 title: 'Event deleted successfully',
@@ -137,17 +158,33 @@ const AdminCard: React.FC = () => {
     }, []);
     const { handleSubmit, register, formState: { errors }, reset } = useForm<DonationFormValues>({
         resolver: zodResolver(donationFormSchema),
-      });
+    });
 
     const handleDeleteCommunityGroup = async (id: string) => {
         try {
             await deleteCommunityGroup(id);
-            setCommunityGroups(communityGroups.filter(group => group._id !== id));
-            toast({
-                variant: 'default',
-                title: 'Community group deleted successfully',
-                description: 'The community group has been deleted.',
-            });
+            const fetchData = async () => {
+                setLoading(true);
+                try {
+                    const [events, categories, communityGroups] = await Promise.all([getAllEvents(), getAllCategories(), getAllCommunityGroups()]);
+                    setEvents(events);
+                    setCategories(categories);
+                    setCommunityGroups(communityGroups);
+                } catch (error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error fetching data',
+                        description: 'There was a problem fetching the data.',
+                    });
+                    setEvents([]);
+                    setCategories([]);
+                    setCommunityGroups([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchData();
         } catch (error) {
             toast({
                 variant: 'destructive',
@@ -174,14 +211,34 @@ const AdminCard: React.FC = () => {
         }
     });
 
-    
+
 
     const onSubmitCategory: SubmitHandler<CategoryFormValues> = async (data) => {
         setCategoryLoading(true);
         try {
             const addedCategory = await addCategory(data);
-            setCategories([...categories, { ...addedCategory, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }]);
-            toast({
+            const fetchData = async () => {
+                setLoading(true);
+                try {
+                    const [events, categories, communityGroups] = await Promise.all([getAllEvents(), getAllCategories(), getAllCommunityGroups()]);
+                    setEvents(events);
+                    setCategories(categories);
+                    setCommunityGroups(communityGroups);
+                } catch (error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error fetching data',
+                        description: 'There was a problem fetching the data.',
+                    });
+                    setEvents([]);
+                    setCategories([]);
+                    setCommunityGroups([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchData(); toast({
                 variant: 'default',
                 title: 'Category added successfully',
                 description: 'The new category has been added.',
@@ -199,38 +256,38 @@ const AdminCard: React.FC = () => {
     };
     const onSubmit: SubmitHandler<DonationFormValues> = async (data) => {
         try {
-          const newDonation = await addDonation(data);
-          toast({
-            variant: 'default',
-            title: 'Donation added successfully',
-            description: 'The new donation has been added.',
-          });
-          const fetchDonations = async () => {
-            try {
-                const data = await getAllDonations();
-                setDonations(data);
-            } catch (error) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Error fetching donations',
-                    description: 'There was a problem fetching the donations.',
-                });
-            } finally {
-                setLoading(false);
-            }
-        };
+            const newDonation = await addDonation(data);
+            toast({
+                variant: 'default',
+                title: 'Donation added successfully',
+                description: 'The new donation has been added.',
+            });
+            const fetchDonations = async () => {
+                try {
+                    const data = await getAllDonations();
+                    setDonations(data);
+                } catch (error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error fetching donations',
+                        description: 'There was a problem fetching the donations.',
+                    });
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        fetchDonations();
-          reset();
-          setDialogOpen(false);
+            fetchDonations();
+            reset();
+            setDialogOpen(false);
         } catch (error) {
-          toast({
-            variant: 'destructive',
-            title: 'Error adding donation',
-            description: 'There was a problem adding the donation.',
-          });
+            toast({
+                variant: 'destructive',
+                title: 'Error adding donation',
+                description: 'There was a problem adding the donation.',
+            });
         }
-      };
+    };
     const onSubmitCommunity: SubmitHandler<CommunityFormValues> = async (data) => {
         setCommunityLoading(true);
         try {
@@ -241,6 +298,28 @@ const AdminCard: React.FC = () => {
                 category: data.categoryId,
             };
             const addedCommunityGroup = await addCommunityGroup(communityGroupData, admin?._id);
+            const fetchData = async () => {
+                setLoading(true);
+                try {
+                    const [events, categories, communityGroups] = await Promise.all([getAllEvents(), getAllCategories(), getAllCommunityGroups()]);
+                    setEvents(events);
+                    setCategories(categories);
+                    setCommunityGroups(communityGroups);
+                } catch (error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error fetching data',
+                        description: 'There was a problem fetching the data.',
+                    });
+                    setEvents([]);
+                    setCategories([]);
+                    setCommunityGroups([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchData();
             toast({
                 variant: 'default',
                 title: 'Community group added successfully',
@@ -258,21 +337,28 @@ const AdminCard: React.FC = () => {
     };
 
     const handleDeleteCategory = async (id: string) => {
-        try {
-            await deleteCategory(id);
-            setCategories(categories.filter(category => category._id !== id));
-            toast({
-                variant: 'default',
-                title: 'Category deleted successfully',
-                description: 'The category has been deleted.',
-            });
-        } catch (error) {
-            toast({
-                variant: 'destructive',
-                title: 'Error deleting category',
-                description: 'There was a problem deleting the category.',
-            });
-        }
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const [events, categories, communityGroups] = await Promise.all([getAllEvents(), getAllCategories(), getAllCommunityGroups()]);
+                setEvents(events);
+                setCategories(categories);
+                setCommunityGroups(communityGroups);
+            } catch (error) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Error fetching data',
+                    description: 'There was a problem fetching the data.',
+                });
+                setEvents([]);
+                setCategories([]);
+                setCommunityGroups([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }
 
     const handleSelectCategory = (categoryId: string) => {
@@ -398,9 +484,15 @@ const AdminCard: React.FC = () => {
                                 ) : (
                                     <div className="space-y-4">
                                         {categories.length > 0 ? (
-                                            categories.map(category => (
-                                                <CategoryCard key={category._id} category={category} onDelete={handleDeleteCategory} />
-                                            ))
+
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                                {categories.map(category => (
+                                                    <CategoryCard key={category._id} category={category} onDelete={handleDeleteCategory} />
+                                                ))}
+                                            </div>
+
+
+
                                         ) : (
                                             <p>No categories found.</p>
                                         )}
@@ -419,75 +511,75 @@ const AdminCard: React.FC = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-2">
-          <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" className="mb-4">Add Donation</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Add Donation</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Fill out the form below to add a new donation.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-4">
-                  <div>
-                    <Input
-                      placeholder="Enter title"
-                      {...register("title")}
-                    />
-                    {errors.title && <p className="text-red-500">{errors.title.message}</p>}
-                  </div>
-                  <div>
-                    <Input
-                      placeholder="Enter sub-head"
-                      {...register("subHead")}
-                    />
-                    {errors.subHead && <p className="text-red-500">{errors.subHead.message}</p>}
-                  </div>
-                  <div>
-                    <Input
-                      placeholder="Enter description"
-                      {...register("description")}
-                    />
-                    {errors.description && <p className="text-red-500">{errors.description.message}</p>}
-                  </div>
-                  <div>
-                    <Input
-                      type="number"
-                      placeholder="Enter amount"
-                      {...register("amount", { valueAsNumber: true })}
-                    />
-                    {errors.amount && <p className="text-red-500">{errors.amount.message}</p>}
-                  </div>
-                </div>
-                <AlertDialogFooter className='my-4'>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction type="submit">Add</AlertDialogAction>
-                </AlertDialogFooter>
-              </form>
-            </AlertDialogContent>
-          </AlertDialog>
+                                <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="outline" className="mb-4">Add Donation</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Add Donation</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Fill out the form below to add a new donation.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <form onSubmit={handleSubmit(onSubmit)}>
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <Input
+                                                        placeholder="Enter title"
+                                                        {...register("title")}
+                                                    />
+                                                    {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+                                                </div>
+                                                <div>
+                                                    <Input
+                                                        placeholder="Enter sub-head"
+                                                        {...register("subHead")}
+                                                    />
+                                                    {errors.subHead && <p className="text-red-500">{errors.subHead.message}</p>}
+                                                </div>
+                                                <div>
+                                                    <Input
+                                                        placeholder="Enter description"
+                                                        {...register("description")}
+                                                    />
+                                                    {errors.description && <p className="text-red-500">{errors.description.message}</p>}
+                                                </div>
+                                                <div>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="Enter amount"
+                                                        {...register("amount", { valueAsNumber: true })}
+                                                    />
+                                                    {errors.amount && <p className="text-red-500">{errors.amount.message}</p>}
+                                                </div>
+                                            </div>
+                                            <AlertDialogFooter className='my-4'>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction type="submit">Add</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </form>
+                                    </AlertDialogContent>
+                                </AlertDialog>
 
-          {loading ? (
-            <Loader />
-          ) : (
-            donations.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {donations.map(donation => (
-                  <AdminDonationCard 
-                    key={donation._id} 
-                    donation={donation} 
-                    onDelete={(id) => setDonations(donations.filter(d => d._id !== id))} 
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="col-span-full text-center">No donations found.</p>
-            )
-          )}
-        </CardContent>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    donations.length > 0 ? (
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                            {donations.map(donation => (
+                                                <AdminDonationCard
+                                                    key={donation._id}
+                                                    donation={donation}
+                                                    onDelete={(id) => setDonations(donations.filter(d => d._id !== id))}
+                                                />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="col-span-full text-center">No donations found.</p>
+                                    )
+                                )}
+                            </CardContent>
                         </Card>
                     </TabsContent>
                 </Tabs>

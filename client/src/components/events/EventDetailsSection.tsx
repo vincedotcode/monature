@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/hooks/useUserData";
+import dynamic from "next/dynamic";
+import EventMap from "@/components/events/EventMap";
+import Loader from "@/components/loader";
 
 const EventDetailsPage: React.FC = () => {
     const { id } = useParams();
@@ -75,7 +78,7 @@ const EventDetailsPage: React.FC = () => {
 
     const isUserParticipant = event?.participants?.some(participant => participant._id === userData?._id);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <> <Loader /> </>;
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -154,6 +157,9 @@ const EventDetailsPage: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            <EventMap longitude={event?.longitude || 57.5522} latitude={event?.latitude || 20.3484} />
+           
         </main>
     );
 };

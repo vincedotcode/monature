@@ -29,10 +29,10 @@ const getAllCommunityGroups = async () => {
 
 // Delete a community group
 const deleteCommunityGroup = async (groupId) => {
-    const communityGroup = await CommunityGroup.findByIdAndDelete(groupId);
-    if (!communityGroup) {
+    if (!groupId) {
         throw new Error('Community group not found');
     }
+    const communityGroup = await CommunityGroup.findByIdAndDelete(groupId);
 
     return communityGroup;
 };

@@ -127,7 +127,6 @@ router.delete('/:id', donationController.deleteDonation);
  */
 router.post('/:id/donate', donationController.addUserDonation);
 
-
 /**
  * @swagger
  * /api/donations/payment:
@@ -153,5 +152,25 @@ router.post('/:id/donate', donationController.addUserDonation);
  */
 router.post('/payment', donationController.createDonationPayment);
 
+/**
+ * @swagger
+ * /api/donations/user/{userId}:
+ *   get:
+ *     tags: [Donations]
+ *     summary: Get donations by user ID
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the user to retrieve donations for
+ *     responses:
+ *       200:
+ *         description: Donations fetched successfully
+ *       400:
+ *         description: Error message
+ */
+router.get('/user/:userId', donationController.getDonationsByUserIdController);
 
 export default router;

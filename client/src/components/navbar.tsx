@@ -50,6 +50,12 @@ export default function Navbar() {
                                     Donation
                                 </Link>
                             </li>
+
+                            <li>
+                                <Link href="/contact" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
+                                    Contact Us
+                                </Link>
+                            </li>
                             {isLoggedIn ? (
                                 <li className="block md:hidden">
                                     <UserDropdown />

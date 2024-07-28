@@ -60,10 +60,7 @@ const addUserDonation = async (donationId, userId, amount) => {
 
 
 const DonationPayment = async (email, amount) => {
-    const MUR_TO_USD_CONVERSION_RATE = 0.025;
-
-    const amountInUSD = Math.round(amount * MUR_TO_USD_CONVERSION_RATE * 100); 
-
+ 
 
 
     try {
@@ -76,7 +73,7 @@ const DonationPayment = async (email, amount) => {
                         product_data: {
                             name: 'Donation',
                         },
-                         unit_amount: amountInUSD,
+                         unit_amount: amount,
                     },
                     quantity: 1,
                 },
@@ -93,6 +90,11 @@ const DonationPayment = async (email, amount) => {
     }
 };
 
+const getDonationsByUserId = async (userId) => {
+    const donations = await Donation.find({ 'donors.userId': userId }).populate('donors.userId', 'name email');
+    return donations;
+};
+
 export default {
     addDonation,
     getAllDonations,
@@ -100,4 +102,5 @@ export default {
     deleteDonation,
     addUserDonation,
     DonationPayment,
+    getDonationsByUserId,
 };

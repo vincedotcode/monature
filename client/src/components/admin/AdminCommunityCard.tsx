@@ -63,7 +63,26 @@ const CommunityCard: React.FC<GroupProps> = ({ group, onDelete }) => {
     };
 
     return (
-        <Card className="w-full max-w-md shadow-lg p-1">
+        <Card className="w-full max-w-md shadow-lg p-1 relative">
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button variant="ghost" size="icon" className="absolute top-2 right-2">
+                        <Trash className="w-5 h-5 text-red-500" />
+                    </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Are you sure you want to delete this community group? This action cannot be undone.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
             <CardHeader className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
                     <div className="bg-primary rounded-md p-3 flex items-center justify-center">
@@ -74,25 +93,6 @@ const CommunityCard: React.FC<GroupProps> = ({ group, onDelete }) => {
                         <CardDescription className="text-muted-foreground">{group.description}</CardDescription>
                     </div>
                 </div>
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <Trash className="w-5 h-5 text-red-500" />
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                Are you sure you want to delete this community group? This action cannot be undone.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
             </CardHeader>
             <CardContent className="grid gap-4 p-6">
                 <div className="flex justify-end">
@@ -100,9 +100,6 @@ const CommunityCard: React.FC<GroupProps> = ({ group, onDelete }) => {
                         {group.category.name}
                     </Badge>
                 </div>
-                <Button variant="outline" size="sm" onClick={handleViewPosts}>
-                    View Posts
-                </Button>
             </CardContent>
         </Card>
     );
