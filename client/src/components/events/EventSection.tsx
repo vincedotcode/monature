@@ -38,14 +38,14 @@ const GetAllEvents: React.FC = () => {
             {loading ? (
                 <Loading />
             ) : (
-                <div className="relative flex h-[600px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
+                <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
                     <DotPattern
                         className={cn(
                             "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
                         )}
                     />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 m-2">
+                    <div className="w-full px-4 py-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {events.length > 0 ? (
                                 events.map(event => (
                                     <EventComponent key={event._id} {...event} id={event._id} />
