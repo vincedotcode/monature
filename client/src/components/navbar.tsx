@@ -45,12 +45,18 @@ export default function Navbar() {
                                     Community
                                 </Link>
                             </li>
+
+                            
                             <li>
                                 <Link href="/donation" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
                                     Donation
                                 </Link>
                             </li>
-
+                            <li>
+                                <Link href="/ai" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
+                                    AI
+                                </Link>
+                            </li>
                             <li>
                                 <Link href="/contact" passHref className="block py-2 px-4 hover:bg-primary-foreground rounded-sm">
                                     Contact Us

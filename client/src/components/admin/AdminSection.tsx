@@ -478,7 +478,9 @@ const AdminCard: React.FC = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-2">
-                                <LoadingButton onClick={() => setCategoryModalOpen(true)} loading={categoryLoading} className="mb-4">Add Category</LoadingButton>
+                            <div className='flex justify-end'>
+                                <LoadingButton onClick={() => setCategoryModalOpen(true)} loading={categoryLoading} className="mb-4 w-1/3">Add Category</LoadingButton>
+                                </div>
                                 {loading ? (
                                     <Loader />
                                 ) : (
@@ -513,7 +515,10 @@ const AdminCard: React.FC = () => {
                             <CardContent className="space-y-2">
                                 <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
                                     <AlertDialogTrigger asChild>
-                                        <Button variant="outline" className="mb-4">Add Donation</Button>
+                                        <div className='flex justify-end'>
+                                            <Button  className="mb-4 w-1/3">Add Donation</Button>
+                                        </div>
+
                                     </AlertDialogTrigger>
                                     <AlertDialogContent>
                                         <AlertDialogHeader>

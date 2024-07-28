@@ -12,6 +12,7 @@ import imageRoute from './routes/Image.js';
 import eventRoute from './routes/Event.js';
 import contactRoutes from './routes/Contact.js';
 import donationRoutes from './routes/Donation.js';
+import aiRoutes from './routes/AI.js';
 import config from './config/index.js';
 
 const app = express();
@@ -47,6 +48,7 @@ app.use('/api/image', imageRoute);
 app.use('/api/goals', goalsRoutes); 
 app.use('/api/donations', donationRoutes);
 app.use('/api', contactRoutes);
+app.use('/api/ai', aiRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

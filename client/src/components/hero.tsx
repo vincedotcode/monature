@@ -47,7 +47,7 @@ export default function HeroSectionCentredWithImage() {
           <div className="mt-10 relative max-w-5xl mx-auto">
             <div className="relative w-full h-96"> {/* Set a specific height */}
               <Image
-                src="/assets/hero.jpg"
+                src="/assets/heromain.jpg"
                 className="rounded-xl"
                 alt="Image Description"
                 layout="fill"
