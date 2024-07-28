@@ -73,7 +73,7 @@ const DonationPayment = async (email, amount) => {
                         product_data: {
                             name: 'Donation',
                         },
-                         unit_amount: amount,
+                        unit_amount: amount * 100, // Convert dollars to cents
                     },
                     quantity: 1,
                 },
